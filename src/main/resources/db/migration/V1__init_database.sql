@@ -6,7 +6,6 @@ drop table if exists orders;
 create table users (
     id       bigserial primary key ,
     username varchar (100) not null ,
-    email    varchar(100) not null unique ,
     password varchar (128) not null
 );
 
