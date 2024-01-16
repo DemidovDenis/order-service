@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.demidov.orderservice.dto.CustomerDto;
 import ru.demidov.orderservice.dto.CustomerRequest;
+import ru.demidov.orderservice.dto.RegisterCustomerDto;
 import ru.demidov.orderservice.entity.Customer;
 import ru.demidov.orderservice.repository.impl.CustomerRepositoryImpl;
 import ru.demidov.orderservice.service.impl.CustomerDetailsService;
