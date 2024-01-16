@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.demidov.orderservice.entity.Product;
-import ru.demidov.orderservice.service.impl.ProductService;
+import ru.demidov.orderservice.service.ProductService;
 
 import java.util.List;
 

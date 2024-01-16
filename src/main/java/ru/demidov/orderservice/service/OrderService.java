@@ -1,5 +1,6 @@
 package ru.demidov.orderservice.service;
 
+import ru.demidov.orderservice.dto.OrderProductDto;
 import ru.demidov.orderservice.entity.Order;
 import ru.demidov.orderservice.entity.Product;
 
