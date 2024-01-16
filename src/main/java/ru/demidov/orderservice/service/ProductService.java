@@ -4,23 +4,23 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.demidov.orderservice.entity.Product;
-import ru.demidov.orderservice.repository.ProductCustomRepository;
+import ru.demidov.orderservice.repository.ProductRepository;
 
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    public final ProductCustomRepository productCustomRepository;
+    public final ProductRepository productRepository;
 
     @Autowired
-    public ProductService(ProductCustomRepository productCustomRepository) {
-        this.productCustomRepository = productCustomRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     public List<Product> findAll(){
         System.out.println("------ProductService----findAll------");
-        return productCustomRepository.findAll()
+        return productRepository.findAll()
                 .stream()
                 .map(this::buildProductResponse)
                 .toList();
