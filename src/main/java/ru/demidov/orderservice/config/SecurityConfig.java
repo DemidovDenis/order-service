@@ -30,13 +30,11 @@ public class SecurityConfig{
 
 
         http.authorizeHttpRequests(a -> a
-//                        .requestMatchers("/api/auth/login/**").authenticated()
-//                        .requestMatchers("/api/**").hasRole("ADMIN")
                         .requestMatchers("/**")
                         .permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults());
+                        .csrf(AbstractHttpConfigurer::disable)
+                        .cors(AbstractHttpConfigurer::disable)
+                        .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
@@ -48,31 +46,9 @@ public class SecurityConfig{
         return authenticationManagerBuilder.build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("{bcrypt}$2a$10$ngDgXN7IEshFhBl.XTk2.eJzaiKgTFU1Q9MdpjWPqB7gOm2HOVusu")
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(admin);
-//    }
-
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            UserDetailsService userDetailsService,
-//            PasswordEncoder passwordEncoder) {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailsService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder);
-//
-//        return new ProviderManager(authenticationProvider);
-//    }
 }
