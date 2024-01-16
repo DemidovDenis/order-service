@@ -1,31 +1,26 @@
 package ru.demidov.orderservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.NoArgsConstructor;
+
 
 @Entity
-@Table (name = "products")
+@Table(name = "products")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    @Size(max = 255)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "description", nullable = false)
-    @Size(max = 255)
-    private String description;
-
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Double price;
 }

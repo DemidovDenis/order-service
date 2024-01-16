@@ -5,7 +5,7 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     show-sql: true
-    open-in-view: false
+    open-in-view: true
 
     # validate db by model
     hibernate:
