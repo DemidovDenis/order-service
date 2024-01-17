@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
                 description = """
                         <p><b>ORDERS INFORMATION</b><br>
                         <p><b>Test credentials:</b><br>
+                        - admin / admin<br>
                         - user / password</p>
                         """
         ),

@@ -2,12 +2,12 @@ package ru.demidov.orderservice.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 @Entity
-@Table (name = "customers")
+@Table (name = "users")
 @Data
-@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -21,10 +21,9 @@ public class Customer {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    private String role;
-
-    public Customer(String username) {
-        this.username = username;
-    }
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 }

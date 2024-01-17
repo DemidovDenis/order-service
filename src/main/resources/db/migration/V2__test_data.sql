@@ -1,5 +1,10 @@
-insert into customers (username, password, role) values ('admin', '{bcrypt}$2a$10$ngDgXN7IEshFhBl.XTk2.eJzaiKgTFU1Q9MdpjWPqB7gOm2HOVusu', 'ROLE_ADMIN');
-insert into customers (username, password, role) values ('user', '{bcrypt}$2a$10$rOofS7qX3htNXcPPlxwZ2OVneBsU5nrxFf92lrYlvwsFs08dHkb4K', 'ROLE_USER');
+insert into users (username, password) values ('admin', '$2a$10$ngDgXN7IEshFhBl.XTk2.eJzaiKgTFU1Q9MdpjWPqB7gOm2HOVusu');
+insert into users (username, password) values ('user', '$2a$10$rOofS7qX3htNXcPPlxwZ2OVneBsU5nrxFf92lrYlvwsFs08dHkb4K');
+
+insert into roles (name) values ('ROLE_ADMIN'), ('ROLE_USER');
+
+insert into users_roles (user_id, role_id) values (1, 1);
+insert into users_roles (user_id, role_id) values (2, 2);
 
 insert into products (name, price) values ('сливочное масло', 100.5);
 insert into products (name, price) values ('шашлык', 400.8);

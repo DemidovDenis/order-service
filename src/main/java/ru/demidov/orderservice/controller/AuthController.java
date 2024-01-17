@@ -30,7 +30,7 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> loginAuth(@RequestBody CustomerRequest customerRequest) {
-        //log.info("Authentication customer {}", customerRequest.getUsername());
+        log.info("Authentication customer {}", customerRequest.getUsername());
         return authService.loginAuth(customerRequest);
     }
 
