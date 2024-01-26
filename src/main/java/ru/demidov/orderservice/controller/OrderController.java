@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import ru.demidov.orderservice.dto.OrderFormDto;
 import ru.demidov.orderservice.dto.OrderProductDto;
 import ru.demidov.orderservice.entity.Order;
 import ru.demidov.orderservice.entity.OrderProduct;
@@ -34,7 +35,9 @@ public class OrderController {
     private final OrderProductServiceImpl orderProductService;
 
     @Autowired
-    public OrderController(ProductServiceImpl productService, OrderServiceImpl orderService, OrderProductServiceImpl orderProductService) {
+    public OrderController(ProductServiceImpl productService,
+                           OrderServiceImpl orderService,
+                           OrderProductServiceImpl orderProductService) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;
@@ -64,7 +67,7 @@ public class OrderController {
             summary = "Adding orders to the database"
     )
     @PostMapping
-    public ResponseEntity<Order> create(@RequestBody OrderForm form) {
+    public ResponseEntity<Order> create(@RequestBody OrderFormDto form) {
         log.info("Adding orders to the database");
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductsExistence(formDtos);
@@ -93,13 +96,11 @@ public class OrderController {
             summary = "Editing orders in the database"
     )
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody OrderForm form) {
+    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody OrderFormDto form) {
         log.info("Editing orders in the database by id");
         if (id <= 0) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         if (isNull(form.getQuantity())) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         if (isNull(form.getProductOrders())) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-
-        System.out.println("orderController---updateOrder = " + form.getProductOrders());
 
         log.debug("update order by id {}, list update product {}", id, form.getProductOrders());
         Order order = orderService.updateOrder(id, form.getProductOrders());
@@ -137,26 +138,6 @@ public class OrderController {
 
         if (!CollectionUtils.isEmpty(list)) {
             throw new RuntimeException("Product not found");
-        }
-    }
-
-    public static class OrderForm {
-
-        private List<OrderProductDto> productOrders;
-
-        public List<OrderProductDto> getProductOrders() {
-            return productOrders;
-        }
-
-        public Integer getQuantity(){
-            return productOrders.stream()
-                    .iterator()
-                    .next()
-                    .getQuantity();
-        }
-
-        public void setProductOrders(List<OrderProductDto> productOrders) {
-            this.productOrders = productOrders;
         }
     }
 }
