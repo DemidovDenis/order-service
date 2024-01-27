@@ -40,15 +40,9 @@ public class ProductController {
             summary = "Adding products to the database"
     )
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
         log.info("Adding products to the database");
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        log.debug("create product {}", productDto);
-        productService.save(product);
-
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+        return productService.create(productDto);
     }
 }
 
