@@ -11,15 +11,15 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.demidov.orderservice.service.impl.CustomerService;
+import ru.demidov.orderservice.service.impl.CustomerServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
-    public final CustomerService customerService;
+    public final CustomerServiceImpl customerService;
 
     @Autowired
-    public SecurityConfig(CustomerService customerService) {
+    public SecurityConfig(CustomerServiceImpl customerService) {
         this.customerService = customerService;
     }
 
@@ -50,5 +50,4 @@ public class SecurityConfig{
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

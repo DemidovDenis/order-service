@@ -6,13 +6,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.demidov.orderservice.entity.Customer;
 import ru.demidov.orderservice.entity.Role;
 import ru.demidov.orderservice.repository.impl.CustomerRepositoryImpl;
+import ru.demidov.orderservice.service.CustomerService;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class CustomerService implements UserDetailsService {
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepositoryImpl customerRepository;
 
     @Autowired
-    public CustomerService(CustomerRepositoryImpl customerRepository) {
+    public CustomerServiceImpl(CustomerRepositoryImpl customerRepository) {
         this.customerRepository = customerRepository;
     }
 

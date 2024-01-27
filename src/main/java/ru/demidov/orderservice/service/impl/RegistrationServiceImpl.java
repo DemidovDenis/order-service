@@ -8,22 +8,24 @@ import ru.demidov.orderservice.dto.RegisterCustomerDto;
 import ru.demidov.orderservice.entity.Customer;
 import ru.demidov.orderservice.entity.Role;
 import ru.demidov.orderservice.repository.impl.CustomerRepositoryImpl;
+import ru.demidov.orderservice.service.RegistrationService;
 
 import java.util.Collections;
 
 @Slf4j
 @Service
-public class RegistrationService {
+public class RegistrationServiceImpl implements RegistrationService {
 
     private final CustomerRepositoryImpl customerRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationService(CustomerRepositoryImpl customerRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationServiceImpl(CustomerRepositoryImpl customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
     public Customer register(RegisterCustomerDto registerCustomerDto) {
         log.info("register customer");
         Customer customer = new Customer();
