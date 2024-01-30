@@ -6,8 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.demidov.orderservice.dto.RegisterCustomerDto;
 import ru.demidov.orderservice.entity.Customer;
-import ru.demidov.orderservice.entity.Role;
 import ru.demidov.orderservice.repository.impl.CustomerRepositoryImpl;
+import ru.demidov.orderservice.repository.impl.RoleRepositoryImpl;
 import ru.demidov.orderservice.service.RegistrationService;
 
 import java.util.Collections;
@@ -17,11 +17,13 @@ import java.util.Collections;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private final CustomerRepositoryImpl customerRepository;
+    private final RoleRepositoryImpl roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationServiceImpl(CustomerRepositoryImpl customerRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationServiceImpl(CustomerRepositoryImpl customerRepository, RoleRepositoryImpl roleRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,7 +33,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         Customer customer = new Customer();
         customer.setUsername(registerCustomerDto.getUsername());
         customer.setPassword(passwordEncoder.encode(registerCustomerDto.getPassword()));
-        customer.setRoles(Collections.singletonList(new Role(2L)));
+        customer.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
         log.debug("save customer {}", customer);
         return customerRepository.save(customer);
     }
