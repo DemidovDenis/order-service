@@ -15,21 +15,22 @@ import ru.demidov.orderservice.dto.CustomerRequest;
 import ru.demidov.orderservice.dto.RegisterCustomerDto;
 import ru.demidov.orderservice.entity.Customer;
 import ru.demidov.orderservice.repository.impl.CustomerRepositoryImpl;
+import ru.demidov.orderservice.service.AuthService;
 
 @Slf4j
 @Service
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
 
     private final DaoAuthenticationProvider authenticationProvider;
-    private final CustomerService detailsService;
-    private final RegistrationService registrationService;
+    private final CustomerServiceImpl detailsService;
+    private final RegistrationServiceImpl registrationService;
     private final CustomerRepositoryImpl customerRepository;
 
     @Autowired
-    public AuthService(
+    public AuthServiceImpl(
             DaoAuthenticationProvider authenticationProvider,
-            CustomerService detailsService,
-            RegistrationService registrationService,
+            CustomerServiceImpl detailsService,
+            RegistrationServiceImpl registrationService,
             CustomerRepositoryImpl customerRepository) {
         this.authenticationProvider = authenticationProvider;
         this.detailsService = detailsService;
@@ -37,6 +38,7 @@ public class AuthService {
         this.customerRepository = customerRepository;
     }
 
+    @Override
     public ResponseEntity<?> loginAuth(@RequestBody CustomerRequest customerRequest) {
         try {
             log.info("customerRequest authenticate");
@@ -54,6 +56,7 @@ public class AuthService {
         return ResponseEntity.status(HttpStatus.OK).body(userDetails.getUsername());
     }
 
+    @Override
     public ResponseEntity<?> createNewCustomer(@RequestBody RegisterCustomerDto registerCustomerDto) {
         if (!registerCustomerDto.getPassword().equals(registerCustomerDto.getConfirmPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -1,6 +1,7 @@
 package ru.demidov.orderservice.repository.impl;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -49,6 +50,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         productCriteriaQuery.select(productRoot);
         productCriteriaQuery.where(criteriaBuilder.equal(productRoot.get("id"),id));
         TypedQuery<Product> query = entityManager.createQuery(productCriteriaQuery);
+
+        try {
+            query.getSingleResult();
+        }catch (NoResultException e){
+            return Optional.empty();
+        }
 
         return Optional.ofNullable(query.getSingleResult());
     }

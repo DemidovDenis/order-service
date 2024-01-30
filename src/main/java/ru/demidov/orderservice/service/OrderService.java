@@ -1,6 +1,7 @@
 package ru.demidov.orderservice.service;
 
-import ru.demidov.orderservice.dto.OrderProductDto;
+import org.springframework.http.ResponseEntity;
+import ru.demidov.orderservice.dto.OrderFormDto;
 import ru.demidov.orderservice.entity.Order;
 import ru.demidov.orderservice.entity.Product;
 
@@ -10,7 +11,7 @@ public interface OrderService {
 
     List<Order> getAllOrders();
     List<Product> findProductsByIdOrder(Long id);
-    Order create(Order order);
-    Order updateOrder(Long id, List<OrderProductDto> formDtos);
-    Order deleteOrder(Long id);
+    ResponseEntity<Order> create(OrderFormDto form);
+    ResponseEntity<Order> update(Long id, OrderFormDto form);
+    ResponseEntity<?> delete(Long id);
 }

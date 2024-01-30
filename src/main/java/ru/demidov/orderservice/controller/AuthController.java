@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.demidov.orderservice.dto.CustomerRequest;
 import ru.demidov.orderservice.dto.RegisterCustomerDto;
-import ru.demidov.orderservice.service.impl.AuthService;
+import ru.demidov.orderservice.service.impl.AuthServiceImpl;
 
 @Slf4j
 @Tag(name = "Authentication and Registration Controller")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final AuthService authService;
+    private final AuthServiceImpl authService;
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(AuthServiceImpl authService) {
         this.authService = authService;
     }
 

@@ -1,6 +1,7 @@
 package ru.demidov.orderservice.repository.impl;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.extern.slf4j.Slf4j;
@@ -96,6 +97,12 @@ public class OrderRepositoryImpl implements OrderRepository {
         orderCriteriaQuery.select(orderRoot);
         orderCriteriaQuery.where(criteriaBuilder.equal(orderRoot.get("id"), id));
         TypedQuery<Order> query = entityManager.createQuery(orderCriteriaQuery);
+
+        try {
+            query.getSingleResult();
+        }catch (NoResultException e){
+            return Optional.empty();
+        }
 
         return Optional.ofNullable(query.getSingleResult());
     }
