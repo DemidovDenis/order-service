@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import ru.demidov.orderservice.dto.OrderFormDto;
 import ru.demidov.orderservice.dto.OrderProductDto;
 import ru.demidov.orderservice.entity.Order;
@@ -15,11 +14,11 @@ import ru.demidov.orderservice.entity.OrderStatus;
 import ru.demidov.orderservice.entity.Product;
 import ru.demidov.orderservice.repository.impl.OrderRepositoryImpl;
 import ru.demidov.orderservice.service.OrderService;
+import ru.demidov.orderservice.util.impl.OrderValidatorImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -31,12 +30,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepositoryImpl orderRepository;
     private final ProductServiceImpl productService;
     private final OrderProductServiceImpl orderProductService;
+    private final OrderValidatorImpl orderValidator;
 
     @Autowired
-    public OrderServiceImpl(OrderRepositoryImpl orderRepository, ProductServiceImpl productService, OrderProductServiceImpl orderProductService) {
+    public OrderServiceImpl(OrderRepositoryImpl orderRepository, ProductServiceImpl productService, OrderProductServiceImpl orderProductService, OrderValidatorImpl orderValidator) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.orderProductService = orderProductService;
+        this.orderValidator = orderValidator;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<Order> create(OrderFormDto form) {
         log.info("Create orders to the database");
         List<OrderProductDto> formDtos = form.getProductOrders();
-        validateProductsExistence(formDtos);
+        orderValidator.validateProductsExistence(formDtos);
 
         Order order = new Order();
         order.setDateCreated(LocalDate.now());
@@ -129,19 +130,6 @@ public class OrderServiceImpl implements OrderService {
             log.debug("delete order {}", order);
             orderRepository.delete(order);
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        }
-    }
-
-    private void validateProductsExistence(List<OrderProductDto> orderProducts) {
-        List<OrderProductDto> list = orderProducts
-                .stream()
-                .filter(op -> Objects.isNull(productService.getProduct(op
-                        .getProduct()
-                        .getId())))
-                .toList();
-
-        if (!CollectionUtils.isEmpty(list)) {
-            throw new RuntimeException("Product not found");
         }
     }
 }
